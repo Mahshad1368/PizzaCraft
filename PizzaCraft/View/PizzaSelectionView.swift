@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PizzaSelectionView: View {
-    @State private var pizzaStyle = ["Margarita Pizza", "Pepperoni Pizza", "Salami Pizza"]
+    @State private var pizzaMenu = Pizza.allCases
     
     
     var body: some View {
@@ -20,10 +20,10 @@ struct PizzaSelectionView: View {
                     .fontWeight(.heavy)
                 
                 
-                List(pizzaStyle , id: \.self) { pizza in
-                    NavigationLink(destination: PizzaDetailView(pizzaName: pizza)) {
+                List(pizzaMenu , id: \.self) { pizza in
+                    NavigationLink(destination: PizzaDetailView (pizza: pizza)) {
                         
-                        Text(pizza)
+                        Text(pizza.rawValue)
                             .frame(minWidth: 0 ,maxWidth: .infinity, alignment: .leading)
                             .padding()
                             .background(Color.red)

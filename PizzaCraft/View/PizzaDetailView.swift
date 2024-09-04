@@ -17,19 +17,19 @@ struct PizzaDetailView: View {
     
     @State private var goToCartView: Bool = false
     
-    let pizzaName : String
+    let pizza : Pizza
     
-    @State private var selectedDough = "Thick"
+    @State private var selectedDough = Dough.Thick
     @State private var selectedTopping = Set<String>()
     @State private var pizzaQuantitySelected = 0
     
-    @State var doughOptions = ["Thick", "Thin"]
+    @State var doughOptions = Dough.allCases
     @State var toppingOptions = ["Ham", "Salami", "Mushrooms", "Bell Peppers"]
     
     var body: some View {
         NavigationStack {
             VStack {
-                Text(pizzaName)
+                Text(pizza.rawValue)
                     .font(.title)
                     .padding()
                 
@@ -37,7 +37,7 @@ struct PizzaDetailView: View {
                     Section(header: Text("Select Dough")) {
                         Picker("Dough Type",selection : $selectedDough) {
                             ForEach (doughOptions , id: \.self) {
-                                Text($0)
+                                Text($0.rawValue)
                             }
                         }.pickerStyle(SegmentedPickerStyle())
                         
@@ -61,27 +61,22 @@ struct PizzaDetailView: View {
                     }
                     
                     Section(header: Text("Quantity")) {
-//                        Picker("Number of Pizza", selection: $pizzaQuantitySelected) {
-//                            ForEach(1..<10) { quantity in
-//                                Text("\(quantity)")
-//                            }
-//                        }.pickerStyle(.menu)
                         Stepper(value: $pizzaQuantitySelected, in: 0...9) {
                             Text("Number of Pizza :\(pizzaQuantitySelected + 1 ) ")
                         }
                     }
-                    
                     Section {
                         ZStack {
                             NavigationLink(destination: CartView(), isActive: $goToCartView) {
                             }.hidden()
                             Button {
-                                let pizzaMaker = PizzaModel(dough: selectedDough, topping: selectedTopping, name: pizzaName, price: 10.0)
+                                let pizzaMaker = PizzaOrderModel(dough: selectedDough, topping: selectedTopping, pizzaType: pizza)
+                                
                                 shoppingCart.addPizza(pizza: pizzaMaker, quantity: pizzaQuantitySelected + 1)
                                 
-                                    self.goToCartView = true
+                                self.goToCartView = true
                                 
-                                print("Is worked")
+                                print("It works")
                                 
                             } label: {
                                 Text("Add to Cart")
@@ -90,26 +85,17 @@ struct PizzaDetailView: View {
                                     .background(Color.blue)
                                     .foregroundColor(.white)
                                     .cornerRadius(16)
-                                    
+                                
                             }.buttonStyle(.plain)
-                    
+                            
                         }.frame(minWidth: 0, maxWidth: .infinity)
                     }
                 }
             }
         }
-       
-        
-        
-//        }.navigationDestination(for: DestinationTarget.self) { destination in
-//            switch destination {
-//            case .CartView:
-//                CartView()
-//            }
-//        }
     }
 }
 #Preview {
-    PizzaDetailView(pizzaName: "Margarita")
+    PizzaDetailView(pizza: .Margarita)
         .environmentObject(ShoppingCart())
 }
