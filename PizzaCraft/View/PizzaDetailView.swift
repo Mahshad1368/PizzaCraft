@@ -10,21 +10,18 @@ import SwiftUI
 
 struct PizzaDetailView: View {
     
-    
     @Environment(\.dismiss) var dismiss
-    
     @EnvironmentObject var shoppingCart: ShoppingCart
-    
     @State private var goToCartView: Bool = false
     
     let pizza : Pizza
     
     @State private var selectedDough = Dough.Thick
-    @State private var selectedTopping = Set<String>()
+    @State private var selectedTopping = Set<Topping>()
     @State private var pizzaQuantitySelected = 0
     
     @State var doughOptions = Dough.allCases
-    @State var toppingOptions = ["Ham", "Salami", "Mushrooms", "Bell Peppers"]
+    @State var toppingOptions = Topping.allCases
     
     var body: some View {
         NavigationStack {
@@ -44,22 +41,27 @@ struct PizzaDetailView: View {
                     }
                     Section (header: Text("Select Topping")){
                         ForEach(toppingOptions, id: \.self) {topping in
-                            Toggle( topping,
-                                    isOn: Binding(
-                                        get: {
-                                            selectedTopping.contains(topping)
-                                        },
-                                        set: { isSelected in
-                                            if isSelected {
-                                                selectedTopping.insert(topping)
-                                                
-                                            }else {
-                                                selectedTopping.remove(topping)
-                                            }
-                                        }))
+                            Toggle(
+                                isOn: Binding(
+                                    get: {
+                                        selectedTopping.contains(topping)
+                                    },
+                                    set: { isSelected in
+                                        if isSelected {
+                                            selectedTopping.insert(topping)
+                                            
+                                        }else {
+                                            selectedTopping.remove(topping)
+                                        }
+                                    })) {
+                                        HStack {
+                                            Text(topping.rawValue)
+                                                .frame(maxWidth: .infinity, alignment: .leading)
+                                            Text("+\(topping.price(),format:.currency(code: "EUR"))")
+                                }
+                            }
                         }
                     }
-                    
                     Section(header: Text("Quantity")) {
                         Stepper(value: $pizzaQuantitySelected, in: 0...9) {
                             Text("Number of Pizza :\(pizzaQuantitySelected + 1 ) ")
@@ -70,7 +72,7 @@ struct PizzaDetailView: View {
                             NavigationLink(destination: CartView(), isActive: $goToCartView) {
                             }.hidden()
                             Button {
-                                let pizzaMaker = PizzaOrderModel(dough: selectedDough, topping: selectedTopping, pizzaType: pizza)
+                                let pizzaMaker = PizzaOrderModel(dough: selectedDough, toppings: selectedTopping, pizzaType: pizza)
                                 
                                 shoppingCart.addPizza(pizza: pizzaMaker, quantity: pizzaQuantitySelected + 1)
                                 

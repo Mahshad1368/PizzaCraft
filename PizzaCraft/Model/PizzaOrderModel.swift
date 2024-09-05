@@ -10,17 +10,33 @@ import Foundation
 struct PizzaOrderModel {
     
         var dough : Dough
-        var topping : Set<String>
+        var toppings :Set<Topping>
         var pizzaType : Pizza
     
     
     func price() -> Double {
-        pizzaType.price() + dough.price()
+        let totalPrice = pizzaType.price()
+        + dough.price()
+        + toppings.map {
+            $0.price()
+        }.reduce(0, +)
         
-    }
+        //SUM WITH FOR IN
+        
+//        for item in toppings {
+//            totalPrice += item.price()
+//        }
+//        return totalPrice
+//        
        
+        
+        //SUM WITH REDUCE()
+//        toppings.reduce(0) { sum , item in
+//            sum + item.price()
+//        }
+        return totalPrice
+    }
 }
-
 
 enum Pizza: String, CaseIterable {
     case Margarita = "Margarita Pizza"
@@ -30,14 +46,11 @@ enum Pizza: String, CaseIterable {
     
     func price() -> Double {
         switch self {
-        case .Margarita : 10.0
-        case .Pepperoni : 12.0
-        case .Salami : 8.0
+        case .Margarita : 7.0
+        case .Pepperoni : 6.0
+        case .Salami : 5.0
         }
     }
-    
-   
-
 }
 enum Dough: String, CaseIterable {
     case Thick = "Thick"
@@ -54,3 +67,24 @@ enum Dough: String, CaseIterable {
     }
 }
 
+enum Topping: String, CaseIterable {
+    
+    case Ham = "Ham"
+    case Salami = "Salami"
+    case Mushrooms = "Mushrooms"
+    case BellPeppers = "Bell Peppers"
+    
+
+    func price() -> Double {
+        
+        switch self {
+        case .Ham : 1.50
+        case .BellPeppers: 2.0
+        case .Mushrooms: 1.2
+        case .Salami: 2.30
+            
+        }
+    }
+}
+
+//@State var toppingOptions = ["Ham", "Salami", "Mushrooms", "Bell Peppers"]
