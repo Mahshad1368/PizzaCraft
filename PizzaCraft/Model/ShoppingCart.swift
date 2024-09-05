@@ -37,31 +37,26 @@ class ShoppingCart: ObservableObject {
             result += (item.pizzaOrderModel.price() * Double(item.count))
         }
         return result
-        
         //        pizzaList.reduce(into: 0) { sum ,item in sum + (item.pizza.price * Double(item.count))}
-        
     }
     
     func getPizzaList() -> [String]{
         var result:[String] = []
-        
         for item in pizzaList {
-            let topingString = item.pizzaOrderModel.topping
+            let topingString = item.pizzaOrderModel.toppings.map {$0.rawValue}.joined(separator: ", ")
             
-            
-            // Margarita - Ham - Thick
-            let string = """
+            var string = """
                         Pizza Name: \(item.pizzaOrderModel.pizzaType.rawValue)
                         Type Dough: \(item.pizzaOrderModel.dough)
-                        Toppings: \(item.pizzaOrderModel.topping)
-
                         """
-            result.append(string)
             
+            // Margarita - Ham - Thick
+            
+            if !item.pizzaOrderModel.toppings.isEmpty {
+                string +=  "\nToppings: \(topingString)"
+            }
+            result.append(string)
         }
         return result
     }
-    
-   
-    
 }
