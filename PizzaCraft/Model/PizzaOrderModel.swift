@@ -13,6 +13,19 @@ struct PizzaOrderModel {
         var toppings :Set<Topping>
         var pizzaType : Pizza
     
+    func getString() -> String {
+        let toppingString = toppings.map {$0.rawValue}.joined(separator: ", ")
+
+        var title =    """
+                        Pizza Name: \(pizzaType.rawValue)
+                        Type Dough: \(dough)
+                        """
+        // Margarita - Ham - Thick
+        if !toppings.isEmpty {
+            title +=  "\nToppings: \(toppingString)"
+        }
+        return title
+    }
     
     func price() -> Double {
         let totalPrice = pizzaType.price()
@@ -36,6 +49,26 @@ struct PizzaOrderModel {
 //        }
         return totalPrice
     }
+    
+//    func getOrderTitle() -> String {
+//        var result = ""
+//        for item in pizz {
+//            let toppingString = item.pizzaOrderModel.toppings.map {$0.rawValue}.joined(separator: ", ")
+//            
+//            var string = """
+//                        Pizza Name: \(item.pizzaOrderModel.pizzaType.rawValue)
+//                        Type Dough: \(item.pizzaOrderModel.dough)
+//                        """
+//            
+//            // Margarita - Ham - Thick
+//            
+//            if !item.pizzaOrderModel.toppings.isEmpty {
+//                string +=  "\nToppings: \(toppingString)"
+//            }
+//            result.append(string)
+//        }
+//        return result
+//    }
 }
 
 enum Pizza: String, CaseIterable {

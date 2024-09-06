@@ -17,33 +17,45 @@ struct CartView: View {
                 
                 Section(header:Text("Pizza Details")) {
                     
-                    let pizzaList = shoppingCart.getPizzaList()
+                    let pizzaList = shoppingCart.getPizzaOrderList()
                     
-                    List(pizzaList , id: \.self) { item in
-                        Text(item)
+                    List {
+
+                        ForEach (pizzaList , id: \.self) { item in
+                            HStack {
+                                Text(item.pizzaOrderModel.getString())
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    
+                                Text("\(item.count)x\(item.pizzaOrderModel.price(),format: .currency(code: "EUR"))")
+                                    
+                            }
+
+                        }
+                        .onDelete(perform: { indexSet in
+                            shoppingCart.removePizza(indexSet: indexSet)
+  
+                        })
                     }
                 }
-                Section (header:  Text("Total Price")) {
+                    Section (header:  Text("Total Price")) {
+                        
+                        Text("\(shoppingCart.totalPrice(),format: .currency(code: "EUR")) ")
+                    }
+                   
                     
-                    Text("\(shoppingCart.totalPrice(),format: .currency(code: "EUR")) ")
-                }
-                Section (header: Text("Removed Option")) {
-                    Text("Removed Option")
-                }
-        
-                NavigationLink(destination: CheckOut()) { Text("To Checkout")
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .font(.headline)
-                        .fontWeight(.bold)
-                    .cornerRadius(16) }
+                    NavigationLink(destination: CheckOut()) { Text("To Checkout")
+                            .padding()
+                            .background(Color.blue)
+                            .foregroundColor(.white)
+                            .font(.headline)
+                            .fontWeight(.bold)
+                        .cornerRadius(16) }
+                    
+                }.navigationTitle("Cart")
                 
-            }.navigationTitle("Cart")
-            
+            }
         }
     }
-}
 
 #Preview {
     CartView().environmentObject(ShoppingCart())

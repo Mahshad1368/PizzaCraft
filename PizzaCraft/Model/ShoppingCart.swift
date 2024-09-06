@@ -9,17 +9,24 @@ import Foundation
 import SwiftUI
 
 
-struct PizzaItem: Identifiable {
-    
+struct PizzaItem: Identifiable, Hashable {
     var id: UUID = UUID()
     var pizzaOrderModel: PizzaOrderModel
     var count: Int
+    
+    // Implement the hash function
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+    
+    // Conform to Equatable protocol for Hashable
+    static func == (lhs: PizzaItem, rhs: PizzaItem) -> Bool {
+        return lhs.id == rhs.id
+    }
 }
-
 class ShoppingCart: ObservableObject {
     
-    @Published var pizzaList : [PizzaItem] = []
-    
+    @Published private var pizzaList : [PizzaItem] = []
     
     func addPizza( pizza: PizzaOrderModel, quantity: Int) {
         //        if var index = pizzaList.firstIndex(where: { pizzaItem in
@@ -39,24 +46,29 @@ class ShoppingCart: ObservableObject {
         return result
         //        pizzaList.reduce(into: 0) { sum ,item in sum + (item.pizza.price * Double(item.count))}
     }
-    
-    func getPizzaList() -> [String]{
-        var result:[String] = []
-        for item in pizzaList {
-            let topingString = item.pizzaOrderModel.toppings.map {$0.rawValue}.joined(separator: ", ")
-            
-            var string = """
-                        Pizza Name: \(item.pizzaOrderModel.pizzaType.rawValue)
-                        Type Dough: \(item.pizzaOrderModel.dough)
-                        """
-            
-            // Margarita - Ham - Thick
-            
-            if !item.pizzaOrderModel.toppings.isEmpty {
-                string +=  "\nToppings: \(topingString)"
-            }
-            result.append(string)
-        }
-        return result
+    func getPizzaOrderList() -> [PizzaItem] {
+        
+        
+      return pizzaList
+        
+        
     }
+    
+    
+//    func removePizza(pizza: String) {
+//        
+//        if let index = pizzaList.firstIndex(where: { $0.pizzaOrderModel.pizzaType.rawValue == pizza}){
+//            pizzaList.remove(at: index)
+//        }
+//    }
+    
+    func removePizza(indexSet: IndexSet) {
+        
+        if let index = indexSet.first {
+           let removed = pizzaList.remove(at: index)
+            
+            print("removed \(removed)")
+        }
+    }
+    
 }
