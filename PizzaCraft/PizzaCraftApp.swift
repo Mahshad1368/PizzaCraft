@@ -9,9 +9,11 @@ import SwiftUI
 
 @main
 struct PizzaCraftApp: App {
+    let persistenceController = PersistenceController.shared
     var body: some Scene {
         WindowGroup {
             ContentView().environmentObject(ShoppingCart())
+                .environment(\.managedObjectContext, persistenceController.viewContext)
         }
     }
 }

@@ -21,6 +21,8 @@
 		49D4BBE02C87272C002E5987 /* ShoppingCart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D4BBDF2C87272C002E5987 /* ShoppingCart.swift */; };
 		49D4BBE22C873D74002E5987 /* CheckOut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D4BBE12C873D74002E5987 /* CheckOut.swift */; };
 		49D4BBE42C885937002E5987 /* DestinationTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D4BBE32C885937002E5987 /* DestinationTarget.swift */; };
+		49D4BBEA2C89E476002E5987 /* PizzaModelData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 49D4BBE82C89E476002E5987 /* PizzaModelData.xcdatamodeld */; };
+		49D4BBEC2C8AE287002E5987 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D4BBEB2C8AE287002E5987 /* PersistenceController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +60,8 @@
 		49D4BBDF2C87272C002E5987 /* ShoppingCart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingCart.swift; sourceTree = "<group>"; };
 		49D4BBE12C873D74002E5987 /* CheckOut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckOut.swift; sourceTree = "<group>"; };
 		49D4BBE32C885937002E5987 /* DestinationTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationTarget.swift; sourceTree = "<group>"; };
+		49D4BBE92C89E476002E5987 /* PizzaModelData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PizzaModelData.xcdatamodel; sourceTree = "<group>"; };
+		49D4BBEB2C8AE287002E5987 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +119,8 @@
 				49AB131D2C8074A8008F1C3D /* Assets.xcassets */,
 				49AB131F2C8074A8008F1C3D /* Preview Content */,
 				49D4BBE32C885937002E5987 /* DestinationTarget.swift */,
+				49D4BBE82C89E476002E5987 /* PizzaModelData.xcdatamodeld */,
+				49D4BBEB2C8AE287002E5987 /* PersistenceController.swift */,
 			);
 			path = PizzaCraft;
 			sourceTree = "<group>";
@@ -302,9 +308,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				49D4BBEA2C89E476002E5987 /* PizzaModelData.xcdatamodeld in Sources */,
 				49AB131C2C8074A5008F1C3D /* ContentView.swift in Sources */,
 				49AB13442C8076E2008F1C3D /* PizzaSelectionView.swift in Sources */,
 				49D4BBDE2C872563002E5987 /* PizzaOrderModel.swift in Sources */,
+				49D4BBEC2C8AE287002E5987 /* PersistenceController.swift in Sources */,
 				49AB138F2C86FD44008F1C3D /* PizzaDetailView.swift in Sources */,
 				49D4BBE42C885937002E5987 /* DestinationTarget.swift in Sources */,
 				49AB13462C8076FA008F1C3D /* CartView.swift in Sources */,
@@ -640,6 +648,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		49D4BBE82C89E476002E5987 /* PizzaModelData.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				49D4BBE92C89E476002E5987 /* PizzaModelData.xcdatamodel */,
+			);
+			currentVersion = 49D4BBE92C89E476002E5987 /* PizzaModelData.xcdatamodel */;
+			path = PizzaModelData.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 49AB130E2C8074A5008F1C3D /* Project object */;
 }

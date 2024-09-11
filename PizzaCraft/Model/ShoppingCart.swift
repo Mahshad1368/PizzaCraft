@@ -7,9 +7,11 @@
 
 import Foundation
 import SwiftUI
+import CoreData
 
 
 struct PizzaItem: Identifiable, Hashable {
+ 
     var id: UUID = UUID()
     var pizzaOrderModel: PizzaOrderModel
     var count: Int
@@ -25,19 +27,13 @@ struct PizzaItem: Identifiable, Hashable {
     }
 }
 class ShoppingCart: ObservableObject {
-    
+
     @Published private var pizzaList : [PizzaItem] = []
     
-    func addPizza( pizza: PizzaOrderModel, quantity: Int) {
-        //        if var index = pizzaList.firstIndex(where: { pizzaItem in
-        //            if pizzaItem.pizza.name == pizza.name {
-        //                pizzaItem.count += pizza.name.count
-        //            }
-        //        })
-        
+    func addPizza(pizza: PizzaOrderModel, quantity: Int) {
         pizzaList.append(PizzaItem(pizzaOrderModel: pizza, count: quantity))
     }
-    
+
     func totalPrice() -> Double {
         var result = 0.0
         for item in pizzaList {
@@ -47,11 +43,7 @@ class ShoppingCart: ObservableObject {
         //        pizzaList.reduce(into: 0) { sum ,item in sum + (item.pizza.price * Double(item.count))}
     }
     func getPizzaOrderList() -> [PizzaItem] {
-        
-        
-      return pizzaList
-        
-        
+      return pizzaList 
     }
     
     

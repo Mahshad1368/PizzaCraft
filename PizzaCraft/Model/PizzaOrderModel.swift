@@ -18,7 +18,7 @@ struct PizzaOrderModel {
 
         var title =    """
                         Pizza Name: \(pizzaType.rawValue)
-                        Type Dough: \(dough)
+                        Type Dough: \(dough.name())
                         """
         // Margarita - Ham - Thick
         if !toppings.isEmpty {
@@ -85,17 +85,22 @@ enum Pizza: String, CaseIterable {
         }
     }
 }
-enum Dough: String, CaseIterable {
-    case Thick = "Thick"
-    case Thin = "Thin"
-    
+@objc
+public enum Dough: Int16, CaseIterable {
+    case Thick
+    case Thin
     
     func price() -> Double {
         switch self {
             
         case .Thick: 2.0
         case .Thin: 3.0
-            
+        }
+    }
+    func name() -> String {
+        switch self{
+        case .Thin:"Thin"
+        case .Thick:"Thick"
         }
     }
 }

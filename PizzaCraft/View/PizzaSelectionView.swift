@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct PizzaSelectionView: View {
+    @Environment(\.managedObjectContext) private var viewContext
+
     @State private var pizzaMenu = Pizza.allCases
     
     

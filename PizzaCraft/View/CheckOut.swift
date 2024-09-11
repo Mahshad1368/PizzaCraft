@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct CheckOut: View {
+        
     var body: some View {
         
        Form {
