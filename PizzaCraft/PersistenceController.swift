@@ -10,8 +10,7 @@ import CoreData
 import SwiftUI
 
 struct PersistenceController {
-    @EnvironmentObject private var shoppingCart: ShoppingCart
-    
+        
     static let shared = PersistenceController()
     
     let container: NSPersistentContainer
@@ -37,16 +36,16 @@ struct PersistenceController {
         let request: NSFetchRequest<PizzaItemCoreData> = PizzaItemCoreData.fetchRequest()
         //        request.sortDescriptors = [NSSortDescriptor(keyPath: \PizzaItemCoreData.name, ascending: true)]
         do {
-            let pizzaItems = try viewContext.fetch(request)
+            let pizzaItemsDB = try viewContext.fetch(request)
             
-            print("Pizza get Items: \(pizzaItems.count)")
+            print("Pizza get Items: \(pizzaItemsDB.count)")
             
-            return pizzaItems.map {pizzaItem in
-                let pizzaName = pizzaItem.name ?? ""
-                let pizzaCount = pizzaItem.count
-                let pizzaDough = Dough(rawValue: pizzaItem.dough) ?? .Thick
+            return pizzaItemsDB.map {pizzaItemDB in
+                let pizzaName = pizzaItemDB.name ?? ""
+                let pizzaCount = pizzaItemDB.count
+                let pizzaDough = Dough(rawValue: pizzaItemDB.dough) ?? .Thick
                 let pizzaType = Pizza(rawValue: pizzaName)
-                let pizzaToppings = pizzaItem.topping ?? ""
+                let pizzaToppings = pizzaItemDB.topping ?? ""
                 let pizzaOrderModel = PizzaOrderModel(dough: pizzaDough, toppings: Set(), pizzaType: pizzaType ?? .Margarita)
                 let pizzaItem = PizzaItem(pizzaOrderModel: pizzaOrderModel, count: Int(pizzaCount))
                 
@@ -57,6 +56,7 @@ struct PersistenceController {
             fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
         }
     }
+    
     func removePizzaCoredata(indexSet: IndexSet) {
         withAnimation {
             let request: NSFetchRequest<PizzaItemCoreData> = PizzaItemCoreData.fetchRequest()

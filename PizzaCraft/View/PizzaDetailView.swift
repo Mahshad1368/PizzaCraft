@@ -80,12 +80,11 @@ struct PizzaDetailView: View {
                                 let pizzaMaker = PizzaOrderModel(dough: selectedDough, toppings: selectedTopping, pizzaType: pizza)
                                 
                                 shoppingCart.addPizza(pizza: pizzaMaker, quantity: pizzaQuantitySelected + 1)
-                                
-                                PersistenceController.shared.addPizzaCoreData(pizza: pizzaMaker, quantity: pizzaQuantitySelected + 1)
-                                
+                             
                                 self.goToCartView = true
+                           
                                 
-                                print("It works")
+                                print("Pizza added to cart")
                                 
                             } label: {
                                 Text("Add to Cart")
