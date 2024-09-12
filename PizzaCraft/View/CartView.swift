@@ -10,13 +10,11 @@ import CoreData
 
 struct CartView: View {
     @EnvironmentObject private var shoppingCart: ShoppingCart
-    
+    @Binding var path: NavigationPath // Use Binding to share the path
     var body: some View {
 
       @State var pizzaList = shoppingCart.getPizzaOrderList()
-        
-        NavigationStack {
-            
+
             Form {
                 Section(header:Text("Pizza Details")) {
                     List {
@@ -37,25 +35,36 @@ struct CartView: View {
                     
                     Text("\(shoppingCart.totalPrice(),format: .currency(code: "EUR")) ")
                 }
-               
-                NavigationLink(destination: CheckOut()) { Text("To Checkout")
-                        .padding()
-                        .background(Color.orange)
-                        .foregroundColor(.white)
-                        .font(.headline)
-                        .fontWeight(.bold)
-                        .cornerRadius(16)
+                
+                Button {
+                    path.append(AppScreen.checkOut)
+                } label: {
+                    Text("To Checkout")
+                            .padding()
+                            .background(Color.orange)
+                            .foregroundColor(.white)
+                            .font(.headline)
+                            .fontWeight(.bold)
+                            .cornerRadius(16)
+                }
+
+            }
+            .navigationTitle("Cart")
+            .navigationBarBackButtonHidden()
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button {
+                        path.removeLast(2)
+                    } label: {
+                        Image(systemName: "chevron.left")
+                    }
+
                 }
             }
-            
-        }.navigationTitle("Cart")
-        
-        
     }
-    
 }
 
 #Preview {
-    CartView().environmentObject(ShoppingCart())
+    CartView(path: .constant(NavigationPath())).environmentObject(ShoppingCart())
     
 }

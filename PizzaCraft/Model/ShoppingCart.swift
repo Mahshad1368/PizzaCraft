@@ -35,6 +35,11 @@ class ShoppingCart: ObservableObject {
             self.pizzaList = PersistenceController.shared.getPizzaListFromDB()
         }
     }
+
+    func clearCart() {
+        PersistenceController.shared.clearCartDB()
+        pizzaList.removeAll()
+    }
     
     func addPizza(pizza: PizzaOrderModel, quantity: Int) {
         

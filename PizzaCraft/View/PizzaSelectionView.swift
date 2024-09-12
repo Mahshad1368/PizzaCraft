@@ -8,23 +8,23 @@
 import SwiftUI
 
 struct PizzaSelectionView: View {
+   
     @Environment(\.managedObjectContext) private var viewContext
-
     @State private var pizzaMenu = Pizza.allCases
-    
-    
+    @Binding var path: NavigationPath // Use Binding to share the path
+
     var body: some View {
-        NavigationStack {
             VStack {
-                
                 Text("Selection Pizza")
                     .font(.headline)
                     .fontWeight(.heavy)
                 
                 
                 List(pizzaMenu , id: \.self) { pizza in
-                    NavigationLink(destination: PizzaDetailView (pizza: pizza)) {
-                        
+                    
+                    Button(action: {
+                        path.append(AppScreen.pizzaDetail(pizza))
+                    }, label: {
                         Text(pizza.rawValue)
                             .frame(minWidth: 0 ,maxWidth: .infinity, alignment: .leading)
                             .padding()
@@ -32,16 +32,13 @@ struct PizzaSelectionView: View {
                             .foregroundColor(.white)
                             .fontWeight(.bold)
                             .cornerRadius(10)
-                        
-                    }
-                    
+                    })
+ 
                 }.navigationTitle("Select Pizza")
             }
-            
         }
-        
+  
     }
-}
 #Preview {
-    PizzaSelectionView()
+    PizzaSelectionView(path: .constant(NavigationPath()))
 }

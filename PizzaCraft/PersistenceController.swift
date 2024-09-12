@@ -78,6 +78,20 @@ struct PersistenceController {
             }
         }
     }
+    
+    func clearCartDB() {
+        let request: NSFetchRequest<NSFetchRequestResult> = PizzaItemCoreData.fetchRequest()
+        let deletRequest = NSBatchDeleteRequest(fetchRequest: request)
+        
+        do {
+            try viewContext.execute(deletRequest)
+            try viewContext.save()
+            
+        } catch  {
+            let nsError = error as NSError
+            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+        }
+    }
     func addPizzaCoreData(pizza: PizzaOrderModel, quantity: Int) {
         
         let newPizzaItem = PizzaItemCoreData(context: viewContext)

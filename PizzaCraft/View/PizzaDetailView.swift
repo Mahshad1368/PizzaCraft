@@ -14,10 +14,9 @@ struct PizzaDetailView: View {
     @Environment(\.managedObjectContext) private var viewContext
 
     @EnvironmentObject var shoppingCart: ShoppingCart
-    @State private var goToCartView: Bool = false
-    
+    @Binding var path: NavigationPath // Use Binding to share the path
+
     let pizza : Pizza
-    
     @State private var selectedDough = Dough.Thick
     @State private var selectedTopping = Set<Topping>()
     @State private var pizzaQuantitySelected = 0
@@ -26,7 +25,7 @@ struct PizzaDetailView: View {
     @State var toppingOptions = Topping.allCases
     
     var body: some View {
-        NavigationStack {
+        
             VStack {
                 Text(pizza.rawValue)
                     .font(.title)
@@ -74,16 +73,15 @@ struct PizzaDetailView: View {
                     }
                     Section {
                         ZStack {
-                            NavigationLink(destination: CartView(), isActive:  $goToCartView) {
-                            }.hidden()
+                           
                             Button {
                                 let pizzaMaker = PizzaOrderModel(dough: selectedDough, toppings: selectedTopping, pizzaType: pizza)
                                 
                                 shoppingCart.addPizza(pizza: pizzaMaker, quantity: pizzaQuantitySelected + 1)
-                             
-                                self.goToCartView = true
-                           
                                 
+//                                path.removeLast()
+                                path.append(AppScreen.cart)
+
                                 print("Pizza added to cart")
                                 
                             } label: {
@@ -102,9 +100,9 @@ struct PizzaDetailView: View {
             }
         }
     }
-}
+
 #Preview {
-    PizzaDetailView(pizza: .Margarita)
+    PizzaDetailView( path: .constant(NavigationPath()), pizza: .Margarita)
         .environmentObject(ShoppingCart())
         
 }
