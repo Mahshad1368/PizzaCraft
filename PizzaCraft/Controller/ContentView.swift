@@ -46,14 +46,15 @@ struct ContentView: View {
                             .foregroundColor(.white)
                             .cornerRadius(15)
                     })
-
-                    NavigationLink(destination: CartView(path: $path)) {
+                    Button(action: {
+                        path.append(AppScreen.cart)
+                    }, label: {
                         Text("Shopping Basket")
                             .padding()
                             .background(Color.green)
                             .foregroundColor(.white)
                             .cornerRadius(15)
-                    }
+                    })
                     .padding()  
                 }
                 .frame(maxWidth: UIScreen.main.bounds.width)

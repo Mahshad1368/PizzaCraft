@@ -88,13 +88,13 @@ struct PizzaDetailView: View {
                                 Text("Add to Cart")
                                     .padding()
                                     .font(.headline)
-                                    .background(Color.blue)
+                                    .background(Color.orange)
                                     .foregroundColor(.white)
                                     .cornerRadius(16)
                                 
                             }.buttonStyle(.plain)
                             
-                        }.frame(minWidth: 0, maxWidth: .infinity)
+                        }.frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                     }
                 }
             }

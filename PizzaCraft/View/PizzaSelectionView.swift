@@ -25,13 +25,21 @@ struct PizzaSelectionView: View {
                     Button(action: {
                         path.append(AppScreen.pizzaDetail(pizza))
                     }, label: {
-                        Text(pizza.rawValue)
-                            .frame(minWidth: 0 ,maxWidth: .infinity, alignment: .leading)
-                            .padding()
-                            .background(Color.red)
-                            .foregroundColor(.white)
-                            .fontWeight(.bold)
+                        HStack {
+                            Image(pizza.imageName())
+                                .resizable()
+                                .scaledToFit()
+                                .cornerRadius(16)
+                                .padding()
+                            
+                            Text(pizza.rawValue)
+                                .frame(minWidth: 0 ,maxWidth: .infinity, alignment: .leading)
+                                .padding()
+                    
+                                .foregroundColor(.orange)
+                                .fontWeight(.bold)
                             .cornerRadius(10)
+                        }
                     })
  
                 }.navigationTitle("Select Pizza")

@@ -41,40 +41,19 @@ struct PizzaOrderModel {
 //        }
 //        return totalPrice
 //        
-       
-        
         //SUM WITH REDUCE()
 //        toppings.reduce(0) { sum , item in
 //            sum + item.price()
 //        }
         return totalPrice
     }
-    
-//    func getOrderTitle() -> String {
-//        var result = ""
-//        for item in pizz {
-//            let toppingString = item.pizzaOrderModel.toppings.map {$0.rawValue}.joined(separator: ", ")
-//            
-//            var string = """
-//                        Pizza Name: \(item.pizzaOrderModel.pizzaType.rawValue)
-//                        Type Dough: \(item.pizzaOrderModel.dough)
-//                        """
-//            
-//            // Margarita - Ham - Thick
-//            
-//            if !item.pizzaOrderModel.toppings.isEmpty {
-//                string +=  "\nToppings: \(toppingString)"
-//            }
-//            result.append(string)
-//        }
-//        return result
-//    }
+
 }
 
 enum Pizza: String, CaseIterable {
-    case Margarita = "Margarita Pizza"
-    case Pepperoni = "Pepperoni Pizza"
-    case Salami = "Salami Pizza"
+    case Margarita = "Margarita"
+    case Pepperoni = "Pepperoni"
+    case Salami = "Salami "
     
     
     func price() -> Double {
@@ -82,6 +61,14 @@ enum Pizza: String, CaseIterable {
         case .Margarita : 7.0
         case .Pepperoni : 6.0
         case .Salami : 5.0
+        }
+    }
+    
+    func imageName() -> String {
+        switch self {
+        case .Margarita : "Margarita"
+        case .Pepperoni : "Pepperoni"
+        case .Salami : "Salami"
         }
     }
 }
@@ -124,5 +111,6 @@ enum Topping: String, CaseIterable {
         }
     }
 }
+
 
 //@State var toppingOptions = ["Ham", "Salami", "Mushrooms", "Bell Peppers"]
