@@ -15,74 +15,86 @@ struct CartView: View {
         
         @State var pizzaList = shoppingCart.getPizzaOrderList()
         
-        Form {
-            Section(header:Text("Pizza Details")) {
-                if shoppingCart.getPizzaOrderList().isEmpty {
-                    Image("emptyPizzaList")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(maxWidth: .infinity)
-                            .opacity(0.8)
-                        .cornerRadius(16)
-                
-                }
-                List {
-                    ForEach (pizzaList , id: \.self) { item in
-                        HStack {
-                            Text(item.pizzaOrderModel.getString())
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                            
-                            Text("\(item.count)x\(item.pizzaOrderModel.price(),format: .currency(code: "EUR"))")
-                        }
-                    }
-                    .onDelete(perform: { indexSet in
-                        withAnimation {
-                            shoppingCart.removePizza(indexSet: indexSet)
-                        }
+        ZStack {
+            LinearGradient(gradient: Gradient(stops: [
+                .init(color: .white, location: 0.1),
+                .init(color: .orange, location: 1.0)
+            ]), startPoint: .topLeading, endPoint: .bottomTrailing)
+            .ignoresSafeArea()
+            .opacity(0.5)
+            
+            Form {
+                Section(header: PageTitleView(text: "Pizza Detail")) {
+                                
+                                if shoppingCart.getPizzaOrderList().isEmpty {
+                                    Image("emptyPizzaList")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(maxWidth: .infinity)
+                                        .opacity(0.8)
+                                        .cornerRadius(16)
+                                    
+                                }
+                                List {
+                                    ForEach (pizzaList , id: \.self) { item in
+                                        HStack {
+                                            Text(item.pizzaOrderModel.getString())
+                                                .frame(maxWidth: .infinity, alignment: .leading)
+                                            
+                                            Text("\(item.count)x\(item.pizzaOrderModel.price(),format: .currency(code: "EUR"))")
+                                        }
+                                    }
+                                    .onDelete(perform: { indexSet in
+                                        withAnimation {
+                                            shoppingCart.removePizza(indexSet: indexSet)
+                                        }
+                                    })
+                                }
+                            }
+                if !shoppingCart.getPizzaOrderList().isEmpty {
+                    Button(role: .destructive, action: {
+                        shoppingCart.clearCart()
+                    }, label: {
+                        Label("Delete All", systemImage: "trash")
                     })
                 }
-            }
-            if !shoppingCart.getPizzaOrderList().isEmpty {
-                Button(role: .destructive, action: {
-                    shoppingCart.clearCart()
-                }, label: {
-                    Label("Delete All", systemImage: "trash")
-                })
-            }
-            
-            Section (header:  Text("Total Price")) {
                 
-                Text("\(shoppingCart.totalPrice(),format: .currency(code: "EUR")) ")
-            }
-            
-            Button {
-                path.append(AppScreen.checkOut)
-            } label: {
-                Text("To Checkout")
-                    .padding()
-                    .background(Color.orange)
-                    .foregroundColor(.white)
-                    .font(.headline)
-                    .fontWeight(.bold)
-                    .cornerRadius(16)
-            }
-            
-        }
-        .navigationTitle("Cart")
-        .navigationBarBackButtonHidden()
-        .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                Button {
-                    if path.count > 2{
-                        path.removeLast(2)
-                    }else {
-                        path.removeLast()
-                    }
-                } label: {
-                    Image(systemName: "chevron.left")
+                Section (header:  Text("Total Price")) {
+                    
+                    Text("\(shoppingCart.totalPrice(),format: .currency(code: "EUR")) ")
                 }
                 
-            }
+                Button {
+                    path.append(AppScreen.checkOut)
+                } label: {
+                    Text("To Checkout")
+                        .padding()
+                        .background(Color.green)
+                        .foregroundColor(.white)
+                        .font(.headline)
+                        .fontWeight(.bold)
+                        .cornerRadius(16)
+                }
+                
+            }.background(Color.clear)
+                .scrollContentBackground(.hidden)
+                .navigationTitle("Cart")
+            
+                .navigationBarBackButtonHidden()
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button {
+                            if path.count > 2{
+                                path.removeLast(2)
+                            }else {
+                                path.removeLast()
+                            }
+                        } label: {
+                            Image(systemName: "chevron.left")
+                        }
+                        
+                    }
+                }
         }
     }
 }

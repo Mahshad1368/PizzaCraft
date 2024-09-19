@@ -16,13 +16,10 @@ struct PizzaOrderModel {
     func getString() -> String {
         let toppingString = toppings.map {$0.rawValue}.joined(separator: ", ")
 
-        var title =    """
-                        Pizza Name: \(pizzaType.rawValue)
-                        Type Dough: \(dough.name())
-                        """
+        var title = "\(pizzaType.rawValue) _ \(dough.name())"
         // Margarita - Ham - Thick
         if !toppings.isEmpty {
-            title +=  "\nToppings: \(toppingString)"
+            title +=  "\n\(toppingString)"
         }
         return title
     }
